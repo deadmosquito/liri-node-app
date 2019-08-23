@@ -26,7 +26,7 @@ if (action === "spotify-this-song") {
                 console.log("Song Name: " + song);
                 console.log("Preview Link: " + preview);
                 console.log("Album: " + album);
-                console.log("-----------------------------")
+                console.log("--------")
             }
         }
     })
@@ -45,6 +45,7 @@ if (action === "movie-this" && parameter) {
                 console.log("Language: " + response.data.Language);
                 console.log("Plot: " + response.data.Plot);
                 console.log("Actors: " + response.data.Actors);
+                console.log("-------")
             })
         .catch(function (error) {
             if (error.response) {
@@ -64,7 +65,30 @@ if (action === "movie-this" && parameter) {
                 console.log("Language: " + response.data.Language);
                 console.log("Plot: " + response.data.Plot);
                 console.log("Actors: " + response.data.Actors);
+                console.log("-------")
             })
+        .catch(function (error) {
+            if (error.response) {
+            }
+        });
+}
+if (action === "concert-this") {
+    axios.get("https://rest.bandsintown.com/artists/" + parameter + "/events?app_id=codingbootcamp")
+        .then(function (response) {
+            var results = response.data
+            if (results.length === 0) {
+                console.log("Sorry, " + parameter + " doesn't have any upcoming shows. Try another band.")
+            } else {
+                console.log("Upcoming Shows For: " + parameter);
+                for (var result of results) {
+                    var date = moment(result.datetime).format("MMM Do YY");
+                    console.log("Venue: " + result.venue.name);
+                    console.log("Venue Location: " + result.venue.city + ", " + result.venue.region);
+                    console.log("Event Date: " + date);
+                    console.log("-------")
+                }
+            }
+        })
         .catch(function (error) {
             if (error.response) {
             }

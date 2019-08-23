@@ -10,6 +10,27 @@ var moment = require("moment");
 var action = process.argv[2];
 var parameter = process.argv.splice(3).join("+");
 
+if (action==="spotify-this-song"){
+    spotify.search({ type: "track", query: parameter }, function(err, data) {
+  if (err) {
+    return console.log("Error occurred: " + err);
+  }else{ 
+  
+  for (i=0; i<3; i++){
+    var artist = data.tracks.items[i].artists[0].name;
+    var song = data.tracks.items[i].name;
+    var preview= data.tracks.items[i].preview_url;
+    var album = data.tracks.items[i].album.name
+
+    console.log("Artist: " + artist);
+    console.log("Song Name: " + song);
+    console.log("Preview Link: " + preview);
+    console.log("Album: " + album);
+    console.log("-----------------------------")
+  }
+}})
+}
+
 if (action === "movie-this" && parameter) {
     
     axios.get("http://www.omdbapi.com/?t=" + parameter + "&y=&plot=short&apikey=trilogy")

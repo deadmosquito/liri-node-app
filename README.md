@@ -17,3 +17,7 @@ To search use the following commands*:
     movie-this YOUR MOVIE SEARCH
     
     do-what-it-says SURPRISE
+
+Example Run:
+
+https://drive.google.com/file/d/1V2lX362b2WxeA588mTNXMLdHJcP07mxO/view

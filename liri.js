@@ -4,7 +4,6 @@ var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 var fs = require("fs");
-var path = require("path");
 var axios = require("axios");
 var moment = require("moment");
 var action = process.argv[2];
@@ -19,12 +18,12 @@ if (action === "spotify-this-song") {
             for (i = 0; i < 3; i++) {
                 var artist = data.tracks.items[i].artists[0].name;
                 var song = data.tracks.items[i].name;
-                var preview = data.tracks.items[i].preview_url;
+                var demo = data.tracks.items[i].preview_url;
                 var album = data.tracks.items[i].album.name
 
                 console.log("Artist: " + artist);
                 console.log("Song Name: " + song);
-                console.log("Preview Link: " + preview);
+                console.log("30 Second Clip: " + demo);
                 console.log("Album: " + album);
                 console.log("--------")
             }
@@ -47,8 +46,8 @@ if (action === "movie-this" && parameter) {
                 console.log("Actors: " + response.data.Actors);
                 console.log("-------")
             })
-        .catch(function (error) {
-            if (error.response) {
+        .catch(function (err) {
+            if (err.response) {
             }
         });
 
@@ -67,8 +66,8 @@ if (action === "movie-this" && parameter) {
                 console.log("Actors: " + response.data.Actors);
                 console.log("-------")
             })
-        .catch(function (error) {
-            if (error.response) {
+        .catch(function (err) {
+            if (err.response) {
             }
         });
 }
@@ -89,8 +88,39 @@ if (action === "concert-this") {
                 }
             }
         })
-        .catch(function (error) {
-            if (error.response) {
+        .catch(function (err) {
+            if (err.response) {
             }
         });
+}
+if (action === "do-what-it-says") {
+    // directs it to my file and in its format with the parameters i give
+    fs.readFile("./random.txt", "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        } else {
+            //split that information so its clean on the txt file
+            var inputArr = data.split(",");
+            if (inputArr[0] === "spotify-this-song") {
+                spotify.search({ type: "track", query: inputArr[1] }, function (err, data) {
+                    if (err) {
+                        return console.log("Error occurred: " + err);
+                    } else {
+                        for (i = 0; i < 5; i++) {
+                            var artist = data.tracks.items[i].artists[0].name;
+                            var song = data.tracks.items[i].name;
+                            var demo = data.tracks.items[i].preview_url;
+                            var album = data.tracks.items[i].album.name
+
+                            console.log("Artist: " + artist);
+                            console.log("Song Name: " + song);
+                            console.log("Preview Link: " + demo);
+                            console.log("Album: " + album);
+                            console.log("-------")
+                        }
+                    }
+                });
+            }
+        }
+    });
 }

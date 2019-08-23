@@ -11,6 +11,9 @@ To search use the following commands*:
 2) Then the following syntax based on your search parameters
 
     concert-this YOUR ARTIST/BAND SEARCH 
+    
     spotify-this-song YOUR SONG TITLE SEARCH
+    
     movie-this YOUR MOVIE SEARCH
+    
     do-what-it-says SURPRISE
